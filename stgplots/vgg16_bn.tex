@@ -1,0 +1,53 @@
+\documentclass{standalone}
+\usepackage{pgfplots}
+\definecolor{colorCHstg}    {HTML}{FF800E}
+\definecolor{colorWstg}    {HTML}{006BA4}
+\definecolor{colorCHstgx}   {HTML}{FFBC79}
+\definecolor{colorWstgx}   {HTML}{5F9ED1}
+\providecommand{\dataset}{}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+height=0.2\columnwidth,
+width=0.9\columnwidth,
+legend pos=outer north east,
+enlarge x limits=0.05,
+enlarge y limits=0.1,
+grid=major,
+grid style={dashed,gray!30},
+ylabel=Compression Rate,
+xmin=1,
+xmax=16,
+ymin=0.0,
+ymax=1.0,
+xtick={1,2,...,16},
+ytick={0, 0.2, 0.4, 0.6, 0.8, 1},
+xticklabels={1,2,3,4,5,6,7,8,9,10,11,12,13, fc1, fc2, fc3},
+yticklabels={0, 0.2, 0.4, 0.6, 0.8, 1},
+yticklabel style = {font=\fontsize{4}{4}\selectfont, rotate=90, 
+yshift=-0.3ex},
+xticklabel style = {font=\fontsize{4}{4}\selectfont, rotate=90},
+ylabel style = {font=\fontsize{7}{7}\selectfont, yshift=-4ex},
+xlabel style = {font=\fontsize{7}{7}\selectfont, yshift=-2ex},
+%x tick label as interval
+scale only axis,
+]
+
+\addplot [mark=square*, color=colorCHstg, thick, densely dotted,
+mark options={scale=0.5, fill=colorCHstg}, error bars/.cd, y
+dir=both, y explicit,
+error bar style={line width=0.5pt, solid, colorCHstgx},
+error mark options={line width=0.5pt, mark size=2pt,rotate=90}]
+table[col sep=space, x index=0, y index=1, y error minus index=2, y
+error plus index=3] {\dataset/vgg16_bn_channel_05.csv};
+
+\addplot [mark=square*, color=colorWstg, mark options={scale=0.5, 
+fill=colorWstg}, error bars/.cd, y dir=both, y explicit, error bar 
+style={line width=0.5pt, solid, colorWstgx}, error mark options={line 
+width=0.5pt, mark size=2pt,rotate=90}]
+table[col sep=space, x index=0, y index=1, y error minus index=2, y 
+error plus index=3] {\dataset/vgg16_bn_weight_010.csv};
+\end{axis}
+\end{tikzpicture}
+
+\end{document}
